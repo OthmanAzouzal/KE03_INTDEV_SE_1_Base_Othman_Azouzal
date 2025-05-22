@@ -45,5 +45,12 @@ namespace DataAccessLayer.Repositories
             _context.Customers.Update(customer);
             _context.SaveChanges();
         }
+
+        public Customer? GetCustomerByEmail(string email)
+        {
+            return _context.Customers
+                .Include(c => c.Orders)
+                .FirstOrDefault(c => c.Email == email);
+        }
     }
 }

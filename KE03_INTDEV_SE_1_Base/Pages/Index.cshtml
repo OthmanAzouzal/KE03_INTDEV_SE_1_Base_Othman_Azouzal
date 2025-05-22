@@ -3,23 +3,9 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<div class="alert-info">
-    </p>
+<div class="content">
+    <h2>Welkom bij Matrix.Inc</h2>
+    <p>Hier kan je mechanische onderdelen kopen voor een goede prijs.</p>
 </div>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Klant</th>
-            <th>Aantal Orders</th>
-        </tr>
-    </thead>
-    @foreach (var c in Model.Customers)
-    {        
-        <tr>
-            <td>@Html.DisplayName(c.Name)</td>
-            <td>@Html.DisplayName(c.Orders.Count.ToString())</td>           
-        </tr>
-    }
-</table>

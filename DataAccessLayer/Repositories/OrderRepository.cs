@@ -45,5 +45,16 @@ namespace DataAccessLayer.Repositories
             _context.Orders.Update(order);
             _context.SaveChanges();
         }
+
+        public IEnumerable<Order> GetOrdersByCustomerId(int customerId)
+        {
+            return _context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.OrderItems)         
+                    .ThenInclude(oi => oi.Product)  
+                .Where(o => o.CustomerId == customerId)
+                .ToList();
+        }
+
     }
 }

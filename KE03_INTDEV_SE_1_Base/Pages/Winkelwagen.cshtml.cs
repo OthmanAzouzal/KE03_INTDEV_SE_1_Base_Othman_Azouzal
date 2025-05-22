@@ -52,7 +52,12 @@ namespace KE03_INTDEV_SE_1_Base.Pages
                 var product = _productRepository.GetProductById(item.ProductId);
                 if (product != null)
                 {
-                    order.Products.Add(product);
+                    order.OrderItems.Add(new OrderItem
+                    {
+                        ProductId = product.Id,
+                        Quantity = item.Quantity,
+                        UnitPrice = product.Price
+                    });
                 }
             }
 
@@ -60,10 +65,9 @@ namespace KE03_INTDEV_SE_1_Base.Pages
             _cartRepository.ClearCart();
 
             TempData["OrderSuccess"] = "Je bestelling is geplaatst!";
-
             return RedirectToPage("/Winkelwagen");
-
         }
+
 
         public IActionResult OnPostVerwijderItem(int productId)
         {

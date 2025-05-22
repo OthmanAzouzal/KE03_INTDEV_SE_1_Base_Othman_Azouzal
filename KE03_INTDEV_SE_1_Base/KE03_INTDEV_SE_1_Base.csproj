@@ -8,13 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <Folder Include="wwwroot\images\parts\" />
     <Folder Include="wwwroot\images\products\" />
   </ItemGroup>

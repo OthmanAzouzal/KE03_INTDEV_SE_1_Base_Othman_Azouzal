@@ -4,27 +4,30 @@
     ViewData["Title"] = "Orderhistorie";
 }
 
-<h2>Orderhistorie</h2>
+<h2>Mijn bestellingen</h2>
 
 @if (Model.Orders.Any())
 {
-    <div class="list-group">
+    <ul class="list-group">
         @foreach (var order in Model.Orders)
         {
-            <div class="list-group-item">
-                <h5>Order #@order.Id</h5>
-                <small class="text-muted">Datum: @order.OrderDate.ToShortDateString()</small>
-                <ul>
-                    @foreach (var product in order.Products)
+            <li class="list-group-item">
+                <strong>Besteld op:</strong> @order.OrderDate.ToString("dd-MM-yyyy") <br />
+
+                <ul class="mt-2">
+                    @foreach (var item in order.OrderItems)
                     {
-                        <li>@product.Name</li>
+                        <li>
+                            @item.Product.Name - @item.Quantity x €@item.UnitPrice
+                        </li>
                     }
                 </ul>
-            </div>
+            </li>
         }
-    </div>
+    </ul>
 }
 else
 {
-    <p>Geen bestellingen gevonden.</p>
+    <p>Je hebt nog geen bestellingen geplaatst.</p>
 }
+

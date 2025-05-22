@@ -23,9 +23,9 @@ namespace DataAccessLayer
             // - Denk aan namen van vliegtuigen            
             var customers = new Customer[]
             {
-                new Customer { Name = "Neo", Address = "123 Elm St" , Active=true},
-                new Customer { Name = "Morpheus", Address = "456 Oak St", Active = true },
-                new Customer { Name = "Trinity", Address = "789 Pine St", Active = true }
+                new Customer { Name = "Neo", Address = "123 Elm St" , },
+                new Customer { Name = "Morpheus", Address = "456 Oak St",  },
+                new Customer { Name = "Trinity", Address = "789 Pine St",  }
             };
             context.Customers.AddRange(customers);
 

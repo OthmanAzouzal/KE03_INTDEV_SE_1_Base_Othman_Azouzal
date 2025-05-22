@@ -18,5 +18,8 @@ namespace DataAccessLayer.Interfaces
         public void UpdateOrder(Order order);
 
         public void DeleteOrder(Order order);
+
+        IEnumerable<Order> GetOrdersByCustomerId(int customerId);
+
     }
 }
