@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Http;
-
 
 namespace DataAccessLayer.Repositories
 {
@@ -15,9 +12,9 @@ namespace DataAccessLayer.Repositories
         private readonly IHttpContextAccessor _httpContextAccessor;
         private const string CartKey = "Cart";
 
-        public CartRepository(IHttpContextAccessor accessor)
+        public CartRepository(IHttpContextAccessor httpContextAccessor)
         {
-            _httpContextAccessor = accessor;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public List<CartItem> GetCart()
@@ -57,13 +54,9 @@ namespace DataAccessLayer.Repositories
             SaveCart(cart);
         }
 
-
-
-
         public void ClearCart()
         {
             _httpContextAccessor.HttpContext!.Session.Remove(CartKey);
         }
     }
-
 }

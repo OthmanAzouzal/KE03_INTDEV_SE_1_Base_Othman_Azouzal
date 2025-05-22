@@ -25,15 +25,14 @@
     {
         <div class="col-md-4 mb-4">
             <div class="card h-100">
-                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name" />
+                <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" />
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
                     <p class="card-text">@product.Description</p>
-                    <p class="card-text"><strong>€ @product.Price</strong></p>
-
+                    <p class="card-text"><strong>€@product.Price.ToString("0.00")</strong></p>
                     <form method="post" asp-page-handler="AddToCart">
-                        <input type="hidden" asp-for="SelectedProductId" value="@product.Id" />
-                        <button type="submit" class="btn btn-success">Toevoegen</button>
+                        <input type="hidden" name="productId" value="@product.Id" />
+                        <button class="btn btn-primary">Toevoegen aan winkelwagen</button>
                     </form>
                 </div>
             </div>
