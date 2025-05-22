@@ -21,6 +21,16 @@ namespace KE03_INTDEV_SE_1_Base
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IPartRepository, PartRepository>();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSession();
+            builder.Services.AddScoped<CartRepository>();
+
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
 
             // Add services to the container.
             builder.Services.AddRazorPages();
@@ -43,6 +53,8 @@ namespace KE03_INTDEV_SE_1_Base
                 context.Database.EnsureCreated();
                 MatrixIncDbInitializer.Initialize(context);
             }
+
+            app.UseSession();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -12,10 +12,10 @@ namespace DataAccessLayer.Repositories
     {
         private readonly MatrixIncDbContext _context;
 
-        public PartRepository(MatrixIncDbContext context) 
+        public PartRepository(MatrixIncDbContext context)
         {
-            _context = context; 
-        }   
+            _context = context;
+        }
 
         public void AddPart(Part part)
         {
@@ -31,7 +31,7 @@ namespace DataAccessLayer.Repositories
 
         public IEnumerable<Part> GetAllParts()
         {
-            return _context.Parts;            
+            return _context.Parts;
         }
 
         public Part? GetPartById(int id)
