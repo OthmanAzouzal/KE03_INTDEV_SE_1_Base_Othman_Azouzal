@@ -1,0 +1,30 @@
+﻿@page
+@model KE03_INTDEV_SE_1_Base.Pages.OrdersModel
+@{
+    ViewData["Title"] = "Orderhistorie";
+}
+
+<h2>Orderhistorie</h2>
+
+@if (Model.Orders.Any())
+{
+    <div class="list-group">
+        @foreach (var order in Model.Orders)
+        {
+            <div class="list-group-item">
+                <h5>Order #@order.Id</h5>
+                <small class="text-muted">Datum: @order.OrderDate.ToShortDateString()</small>
+                <ul>
+                    @foreach (var product in order.Products)
+                    {
+                        <li>@product.Name</li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Geen bestellingen gevonden.</p>
+}

@@ -19,10 +19,15 @@ namespace KE03_INTDEV_SE_1_Base.Pages
             Customers = new List<Customer>();
         }
 
-        public void OnGet()
-        {            
-            Customers = _customerRepository.GetAllCustomers().ToList();                            
-            _logger.LogInformation($"getting all {Customers.Count} customers");
+        public IActionResult OnGet()
+        {
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+            {
+                return RedirectToPage("/Login");
+            }
+            return Page();
         }
+
     }
 }

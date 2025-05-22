@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DataAccessLayer.Models
 {
     public class Product
-    {        
+    {
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -16,6 +16,8 @@ namespace DataAccessLayer.Models
         public string Description { get; set; }
 
         public decimal Price { get; set; }
+
+        public string ImageUrl { get; set; }
 
         public ICollection<Order> Orders { get; } = new List<Order>();
 

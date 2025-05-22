@@ -13,7 +13,7 @@ namespace DataAccessLayer.Repositories
     {
         private readonly MatrixIncDbContext _context;
 
-        public ProductRepository(MatrixIncDbContext context) 
+        public ProductRepository(MatrixIncDbContext context)
         {
             _context = context;
         }
@@ -36,7 +36,7 @@ namespace DataAccessLayer.Repositories
 
         public Product? GetProductById(int id)
         {
-            return _context.Products.Include(p => p.Parts).FirstOrDefault(p => p.Id == id);
+            return _context.Products.FirstOrDefault(p => p.Id == id);
         }
 
         public void UpdateProduct(Product product)

@@ -1,0 +1,67 @@
+﻿@page
+@model KE03_INTDEV_SE_1_Base.Pages.ProductsModel
+
+@{
+    ViewData["Title"] = "Alle Producten";
+}
+
+<h1>Alle Producten</h1>
+
+<!-- Toast notificatie met afbeelding -->
+<div aria-live="polite" aria-atomic="true" class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+    <div id="productToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <img id="toastImage" src="" alt="Product afbeelding" style="height: 64px; width: 64px; object-fit: cover; margin-right: 10px; border-radius: 5px;">
+            <div class="toast-body" id="toastText">
+                Product is toegevoegd aan je winkelmand!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Sluiten"></button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var product in Model.Products)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name" />
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">@product.Description</p>
+                    <p class="card-text"><strong>€ @product.Price</strong></p>
+
+                    <form method="post" asp-page-handler="AddToCart">
+                        <input type="hidden" asp-for="SelectedProductId" value="@product.Id" />
+                        <button type="submit" class="btn btn-success">Toevoegen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            @if (TempData["ProductName"] != null && TempData["ProductImage"] != null)
+            {
+                <text>
+                    var toastEl = document.getElementById('productToast');
+                    var toastText = document.getElementById('toastText');
+                    var toastImage = document.getElementById('toastImage');
+
+                    toastText.textContent = "@TempData["ProductName"] is toegevoegd aan je winkelmand!";
+                    toastImage.src = "@TempData["ProductImage"]";
+
+                    var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+                    toast.show();
+                </text>
+            }
+        });
+    </script>
+}
+
+
+
