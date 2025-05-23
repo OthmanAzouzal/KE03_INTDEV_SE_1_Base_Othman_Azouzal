@@ -1,0 +1,16 @@
+﻿@page
+@model KE03_INTDEV_SE_1_Base.Pages.LogoutModel
+@{
+    // Optioneel: je kunt hier een boodschap tonen of meteen redirecten.
+}
+
+@functions {
+    public class LogoutModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
+    {
+        public IActionResult OnPost()
+        {
+            HttpContext.Session.Clear();  // Session leegmaken, uitloggen
+            return RedirectToPage("/Index");  // Naar home na uitloggen
+        }
+    }
+}

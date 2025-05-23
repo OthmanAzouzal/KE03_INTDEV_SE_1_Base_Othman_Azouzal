@@ -58,6 +58,13 @@
                             <li class="nav-item">
                                 <span class="nav-link text-light">Welkom, @username</span>
                             </li>
+                            <li class="nav-item">
+                                <form method="post" asp-page="/Logout" class="d-inline">
+                                    <button type="submit" class="btn btn-link nav-link text-light" style="display:inline; padding:0; border:none; cursor:pointer;">
+                                        Uitloggen
+                                    </button>
+                                </form>
+                            </li>
                         }
                         else
                         {

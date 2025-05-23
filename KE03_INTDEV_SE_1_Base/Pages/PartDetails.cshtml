@@ -11,15 +11,18 @@
 }
 else
 {
-    <div class="content text-center">
-        <h2>@Model.Part.Name</h2>
-        <img src="@Model.Part.ImageUrl" alt="@Model.Part.Name" class="img-fluid rounded mb-4" style="max-height: 400px; object-fit: contain;" />
-        <p class="lead">@Model.Part.Description</p>
-        <h4>Prijs: €@Model.Part.Price.ToString("0.00")</h4>
+    <div class="details-container">
+        <div class="details-content">
+            <h2>@Model.Part.Name</h2>
+            <img src="@Model.Part.ImageUrl" alt="@Model.Part.Name" />
+            <p class="lead">@Model.Part.Description</p>
+            <h4>Prijs: €@Model.Part.Price.ToString("0.00")</h4>
 
-        <form method="post" asp-page-handler="AddToCart">
-            <input type="hidden" name="productId" value="@Model.Part.Id" />
-            <button class="btn btn-success mt-3">Toevoegen aan winkelwagen</button>
-        </form>
+            <form method="post" asp-page-handler="AddToCart">
+                <input type="hidden" name="productId" value="@Model.Part.Id" />
+                <button type="submit" class="add-to-cart-button">Toevoegen aan winkelwagen</button>
+            </form>
+        </div>
     </div>
+
 }
