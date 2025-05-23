@@ -1,92 +1,91 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewData["Title"] - Matrix.Inc</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-MX9q9X6Z8XqRhknczgQDEzU8Zw4+oFJ+LoX9n1KPtQbPKM3LVXvSLZdN1AL+fP+gOa1yRx0cC2HlOPRILW+U5g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/KE03_INTDEV_SE_1_Base.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">KE03_INTDEV_SE_1_Base</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand fw-bold" asp-page="/Index">Matrix.Inc</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    @{
-                        var username = Context.Session.GetString("Username");
-                    }
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link" asp-page="/Privacy">Privacy</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="productDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Producten
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="productDropdown">
+                            <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" asp-page="/Products">Alle Producten</a></li>
                                 <li><a class="dropdown-item" asp-page="/Parts">Onderdelen</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Winkelwagen">Winkelwagen</a>
+                            <a class="nav-link" asp-page="/Winkelwagen"><i class="fas fa-shopping-cart"></i> Winkelwagen</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Mijn Profiel
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" asp-page="/Orders">Orderhistorie</a></li>
                             </ul>
                         </li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        @{
+                            var username = Context.Session.GetString("Username");
+                        }
                         @if (!string.IsNullOrEmpty(username))
                         {
                             <li class="nav-item">
-                                <span class="nav-link text-dark">Welkom, @username</span>
+                                <span class="nav-link text-light">Welkom, @username</span>
                             </li>
                         }
-
-                    </ul>
-
-
-                        </li>
-
-                        </li>
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-page="/Login">Inloggen</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container my-4">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - KE03_INTDEV_SE_1_Base - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <footer class="bg-dark text-light py-3 mt-auto">
+        <div class="container text-center">
+            &copy; 2025 - Matrix.Inc - <a class="text-light text-decoration-underline" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-

@@ -24,24 +24,24 @@ namespace KE03_INTDEV_SE_1_Base.Pages
                 _httpContextAccessor = httpContextAccessor;
             }
 
-            public void OnGet()
+        public void OnGet()
+        {
+            var email = _httpContextAccessor.HttpContext?.Session.GetString("Username");
+
+            if (string.IsNullOrEmpty(email))
             {
-                var email = _httpContextAccessor.HttpContext?.Session.GetString("Username");
+                Orders = new List<Order>();
+                return;
+            }
 
-                if (string.IsNullOrEmpty(email))
-                {
-                    Orders = new List<Order>();
-                    return;
-                }
-
-                var customer = _customerRepository.GetCustomerByEmail(email);
-                if (customer != null)
-                {
-                    Orders = _orderRepository.GetOrdersByCustomerId(customer.Id).ToList();
-                }
+            var customer = _customerRepository.GetCustomerByEmail(email);
+            if (customer != null)
+            {
+                Orders = _orderRepository.GetOrdersByCustomerId(customer.Id).ToList(); // ToList is optioneel
             }
         }
     }
+}
 
 
 

@@ -24,17 +24,18 @@
     @foreach (var part in Model.Parts)
     {
         <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="@part.ImageUrl" alt="@part.Name" />
+            <div class="card h-100 shadow-sm">
+                <img src="@part.ImageUrl" class="card-img-top" alt="@part.Name" style="height: 250px; object-fit: cover;" />
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">@part.Name</h5>
-                    <p class="card-text">@part.Description</p>
-                    <p class="card-text fw-bold">€ @part.Price</p>
+                    <div class="mt-auto">
+                        <form method="post" asp-page-handler="AddToCart">
+                            <input type="hidden" asp-for="SelectedPartId" value="@part.Id" />
+                            <button class="btn btn-success btn-sm me-2">Toevoegen aan winkelwagen</button>
+                        </form>
+                        <a asp-page="/PartDetails" asp-route-id="@part.Id" class="btn btn-outline-primary btn-sm mt-2 w-100">Bekijk onderdeel</a>
 
-                    <form method="post" asp-page-handler="AddToCart">
-                        <input type="hidden" asp-for="SelectedPartId" value="@part.Id" />
-                        <button type="submit" class="btn btn-success w-100">Toevoegen</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

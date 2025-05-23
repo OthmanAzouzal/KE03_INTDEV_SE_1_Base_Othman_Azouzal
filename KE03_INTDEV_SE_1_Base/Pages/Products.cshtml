@@ -24,21 +24,23 @@
     @foreach (var product in Model.Products)
     {
         <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" />
-                <div class="card-body">
+            <div class="card h-100 shadow-sm">
+                <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 250px; object-fit: cover;" />
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">@product.Name</h5>
-                    <p class="card-text">@product.Description</p>
-                    <p class="card-text"><strong>€@product.Price.ToString("0.00")</strong></p>
-                    <form method="post" asp-page-handler="AddToCart">
-                        <input type="hidden" name="productId" value="@product.Id" />
-                        <button class="btn btn-primary">Toevoegen aan winkelwagen</button>
-                    </form>
+                    <div class="mt-auto">
+                        <form method="post" asp-page-handler="AddToCart">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <button class="btn btn-success btn-sm me-2">Toevoegen aan winkelwagen</button>
+                        </form>
+                        <a asp-page="/ProductDetails" asp-route-id="@product.Id" class="btn btn-outline-primary btn-sm mt-2 w-100">Bekijk product</a>
+                    </div>
                 </div>
             </div>
         </div>
     }
 </div>
+
 
 
 @section Scripts {

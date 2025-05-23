@@ -13,6 +13,10 @@
         {
             <li class="list-group-item">
                 <strong>Besteld op:</strong> @order.OrderDate.ToString("dd-MM-yyyy") <br />
+                <strong>Klant:</strong> @order.Customer.Name <br />
+                <strong>Adres:</strong> @order.Customer.Address <br />
+                <strong>Email:</strong> @order.Customer.Email <br />
+
 
                 <ul class="mt-2">
                     @foreach (var item in order.OrderItems)

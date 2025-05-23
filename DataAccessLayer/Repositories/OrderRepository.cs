@@ -50,8 +50,8 @@ namespace DataAccessLayer.Repositories
         {
             return _context.Orders
                 .Include(o => o.Customer)
-                .Include(o => o.OrderItems)         
-                    .ThenInclude(oi => oi.Product)  
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
                 .Where(o => o.CustomerId == customerId)
                 .ToList();
         }

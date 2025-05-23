@@ -1,0 +1,25 @@
+﻿@page "{id:int}"
+@model KE03_INTDEV_SE_1_Base.Pages.ProductDetailsModel
+@{
+    ViewData["Title"] = Model.Product?.Name ?? "Productdetails";
+}
+
+@if (Model.Product == null)
+{
+    <h2>Product niet gevonden</h2>
+}
+else
+{
+    <div class="content text-center">
+        <h2>@Model.Product.Name</h2>
+        <img src="@Model.Product.ImageUrl" alt="@Model.Product.Name" class="img-fluid rounded mb-4" style="max-height: 400px; object-fit: contain;" />
+        <p class="lead">@Model.Product.Description</p>
+        <h4>Prijs: €@Model.Product.Price.ToString("0.00")</h4>
+
+        <form method="post" asp-page-handler="AddToCart">
+            <input type="hidden" name="productId" value="@Model.Product.Id" />
+            <button class="btn btn-success mt-3">Toevoegen aan winkelwagen</button>
+        </form>
+    </div>
+}
+
