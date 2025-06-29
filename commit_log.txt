@@ -1,0 +1,68 @@
+commit 433e1a9d37ffea5054a2e9433f888cbf442ddd8f
+Author: Ottie3108@outlook.com <Ottie3108@outlook.com>
+Date:   Fri May 23 14:33:15 2025 +0200
+
+    Last commit
+
+commit dc3fe4f0d80fe2bafd10faf6479daabefa0a93f2
+Author: Ottie3108@outlook.com <Ottie3108@outlook.com>
+Date:   Fri May 23 14:10:52 2025 +0200
+
+    Revert "Fifth Commit"
+    
+    This reverts commit 8e41916327d58c6c8bf99e1f31dd643326199f2c.
+
+commit 8e41916327d58c6c8bf99e1f31dd643326199f2c
+Author: Ottie3108@outlook.com <Ottie3108@outlook.com>
+Date:   Fri May 23 12:46:00 2025 +0200
+
+    Fifth Commit
+
+commit 54f531faf7baab3b5cdeb6e9009c34380b961272
+Author: Ottie3108@outlook.com <Ottie3108@outlook.com>
+Date:   Fri May 23 12:12:55 2025 +0200
+
+    Fourth Commit
+
+commit 71817ab8bae93f57480bf7e9549324c2d57db75f
+Author: Ottie3108@outlook.com <Ottie3108@outlook.com>
+Date:   Thu May 22 21:33:00 2025 +0200
+
+    Third Commit
+
+commit 3706138f3dc319d80811e7f9477eae3742df65b7
+Author: Ottie3108@outlook.com <Ottie3108@outlook.com>
+Date:   Thu May 22 20:21:24 2025 +0200
+
+    Second Commit
+
+commit d4ce6b5e49f652d021c980f74758e8bb9f69bcab
+Merge: 1ec3d6a 8d57b59
+Author: Ottie3108@outlook.com <Ottie3108@outlook.com>
+Date:   Thu May 22 16:33:19 2025 +0200
+
+    Merge branch 'master' of https://github.com/OthmanAzouzal/KE03_INTDEV_SE_1_Base_Othman_Azouzal
+
+commit 1ec3d6a257bd9dc62d006b5821ff2358a96c6f5b
+Author: Ottie3108@outlook.com <Ottie3108@outlook.com>
+Date:   Thu May 22 15:24:29 2025 +0200
+
+    First commit
+
+commit 8d57b59a1c903bd77a4f4d54ed15311c80fb5a2c
+Author: Ottie3108@outlook.com <Ottie3108@outlook.com>
+Date:   Thu May 22 15:24:29 2025 +0200
+
+    a
+
+commit 4dac287b93534def9b30eb87371e1446e941c5d7
+Author: Ottie <Ottie@MSI>
+Date:   Wed May 21 12:30:36 2025 +0200
+
+    Add project files.
+
+commit dee172a70b23af773e53a7b1d84de7bb906bdb0e
+Author: Ottie <Ottie@MSI>
+Date:   Wed May 21 12:30:34 2025 +0200
+
+    Add .gitattributes.
