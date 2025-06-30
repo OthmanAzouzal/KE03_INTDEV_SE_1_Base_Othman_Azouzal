@@ -14,5 +14,7 @@ namespace DataAccessLayer.Models
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
         public decimal DiscountPercentage { get; set; } = 0;
+
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>(); // Toegevoegde navigatie-eigenschap
     }
 }
