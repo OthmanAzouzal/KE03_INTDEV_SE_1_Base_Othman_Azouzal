@@ -44,5 +44,20 @@ namespace DataAccessLayer.Repositories
             _context.Products.Update(product);
             _context.SaveChanges();
         }
+
+        public void AddRandomDiscounts()
+        {
+            var rnd = new Random();
+            var products = _context.Products.ToList();
+
+            foreach (var product in products)
+            {
+                // Random discount tussen 5% en 30%
+                product.DiscountPercentage = rnd.Next(5, 31);
+            }
+
+            _context.SaveChanges();
+        }
     }
+
 }
