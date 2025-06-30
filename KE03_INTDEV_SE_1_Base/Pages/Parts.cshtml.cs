@@ -34,14 +34,12 @@ namespace KE03_INTDEV_SE_1_Base.Pages
             var part = _context.Parts.FirstOrDefault(p => p.Id == SelectedPartId);
             if (part != null)
             {
-                var discountedPrice = part.Price * (1 - part.DiscountPercentage / 100m);
-
                 var product = new Product
                 {
                     Id = part.Id,
                     Name = part.Name,
                     Description = part.Description,
-                    Price = discountedPrice, // prijs met korting doorgeven
+                    Price = part.Price,
                     ImageUrl = part.ImageUrl
                 };
 

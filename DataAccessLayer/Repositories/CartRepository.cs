@@ -34,8 +34,6 @@ namespace DataAccessLayer.Repositories
         {
             var cart = GetCart();
 
-            var discountedPrice = product.Price * (1 - product.DiscountPercentage / 100m);
-
             var existingItem = cart.FirstOrDefault(c => c.ProductId == product.Id);
             if (existingItem != null)
             {
@@ -47,7 +45,7 @@ namespace DataAccessLayer.Repositories
                 {
                     ProductId = product.Id,
                     ProductName = product.Name,
-                    Price = discountedPrice,
+                    Price = product.Price,
                     Quantity = 1,
                     ImageUrl = product.ImageUrl
                 });
@@ -55,7 +53,6 @@ namespace DataAccessLayer.Repositories
 
             SaveCart(cart);
         }
-
 
         public void ClearCart()
         {

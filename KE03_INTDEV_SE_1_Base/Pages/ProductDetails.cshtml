@@ -1,75 +1,25 @@
 ﻿@page "{id:int}"
 @model KE03_INTDEV_SE_1_Base.Pages.ProductDetailsModel
-
 @{
     ViewData["Title"] = Model.Product?.Name ?? "Productdetails";
 }
 
 @if (Model.Product == null)
 {
-    <h2 class="text-center text-danger mt-5">Product niet gevonden</h2>
+    <h2>Product niet gevonden</h2>
 }
 else
 {
-    var discountedPrice = Model.Product.Price * (1 - Model.Product.DiscountPercentage / 100m);
-    <div class="product-detail-container">
+    <div class="content text-center">
         <h2>@Model.Product.Name</h2>
-
-        <img src="@Model.Product.ImageUrl" alt="@Model.Product.Name" class="img-fluid mb-3" />
-
-        <p class="description">@Model.Product.Description</p>
-
-        <div class="price mb-3">
-            @if (Model.Product.DiscountPercentage > 0)
-            {
-                <span class="old-price text-muted text-decoration-line-through me-2">€@Model.Product.Price.ToString("0.00")</span>
-                <span class="text-danger fw-bold">€@discountedPrice.ToString("0.00")</span>
-            }
-            else
-            {
-                <span>€@Model.Product.Price.ToString("0.00")</span>
-            }
-        </div>
+        <img src="@Model.Product.ImageUrl" alt="@Model.Product.Name" class="img-fluid rounded mb-4" style="max-height: 400px; object-fit: contain;" />
+        <p class="lead">@Model.Product.Description</p>
+        <h4>Prijs: €@Model.Product.Price.ToString("0.00")</h4>
 
         <form method="post" asp-page-handler="AddToCart">
             <input type="hidden" name="productId" value="@Model.Product.Id" />
-            <button class="btn btn-success mb-4">Toevoegen aan winkelwagen</button>
+            <button class="btn btn-success mt-3">Toevoegen aan winkelwagen</button>
         </form>
-
-        <hr />
-
-        <section class="reviews">
-            <h3>Reviews</h3>
-
-            @if (Model.Reviews.Count == 0)
-            {
-                <p>Er zijn nog geen reviews voor dit product.</p>
-            }
-            else
-            {
-                foreach (var review in Model.Reviews)
-                {
-                    <div class="review border rounded p-3 mb-3">
-                        <strong>@review.UserName</strong>
-                        <div class="stars mb-1">
-                            @{
-                                int fullStars = (int)review.Rating;
-                                int emptyStars = 5 - fullStars;
-                            }
-                            @for (int i = 0; i < fullStars; i++)
-                            {
-                                <i class="fa fa-star text-warning"></i>
-                            }
-                            @for (int i = 0; i < emptyStars; i++)
-                            {
-                                <i class="fa fa-star-o text-warning"></i>
-                            }
-                        </div>
-                        <p>@review.Comment</p>
-                        <small class="text-muted">Gepubliceerd op @review.CreatedAt.ToString("dd-MM-yyyy")</small>
-                    </div>
-                }
-            }
-        </section>
     </div>
 }
+
