@@ -1,11 +1,55 @@
 ﻿@page
-@model IndexModel
+@model KE03_INTDEV_SE_1_Base.Pages.IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
+
 <div class="content">
     <h2>Welkom bij Matrix.Inc</h2>
     <p>Hier kan je mechanische onderdelen kopen voor een goede prijs.</p>
 </div>
 
+@if (Model.SaleProducts != null && Model.SaleProducts.Any())
+{
+    <h3 class="mt-5">Producten in de Sale</h3>
+    <div class="product-grid">
+        @foreach (var product in Model.SaleProducts)
+        {
+            <div class="product-card">
+                <div class="discount-badge">-@product.DiscountPercentage% SALE</div>
+                <img src="@product.ImageUrl" alt="@product.Name" class="product-image" />
+                <div class="product-title">@product.Name</div>
+                <div class="product-price">
+                    <span class="old-price">€ @product.Price.ToString("0.00")</span>
+                    <span class="new-price">€ @( (product.Price * (1 - product.DiscountPercentage / 100.0m)).ToString("0.00") )</span>
+                </div>
+                <a asp-page="/ProductDetails" asp-route-id="@product.Id" class="btn btn-outline-primary btn-sm mt-2">Bekijk product</a>
+            </div>
+        }
+    </div>
+}
 
+@if (Model.DiscountedParts != null && Model.DiscountedParts.Any())
+{
+    <h3 class="mt-5">Onderdelen in de Sale</h3>
+    <div class="product-grid">
+        @foreach (var part in Model.DiscountedParts)
+        {
+            <div class="product-card">
+                <div class="discount-badge">-@part.DiscountPercentage% SALE</div>
+                <img src="@part.ImageUrl" alt="@part.Name" class="product-image" />
+                <div class="product-title">@part.Name</div>
+                <div class="product-price">
+                    <span class="old-price">€ @part.Price.ToString("0.00")</span>
+                    <span class="new-price">€ @( (part.Price * (1 - part.DiscountPercentage / 100.0m)).ToString("0.00") )</span>
+                </div>
+                <a asp-page="/PartDetails" asp-route-id="@part.Id" class="btn btn-outline-primary btn-sm mt-2">Bekijk onderdeel</a>
+            </div>
+        }
+    </div>
+}
+
+@if ((!Model.SaleProducts.Any()) && (!Model.DiscountedParts.Any()))
+{
+    <p>Er zijn momenteel geen producten of onderdelen in de sale.</p>
+}

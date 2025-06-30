@@ -5,7 +5,6 @@
     ViewData["Title"] = "Login";
 }
 
-
 <h2>Login</h2>
 
 <partial name="_ValidationScriptsPartial" />
@@ -16,8 +15,16 @@
         <input type="text" id="username" name="Username" class="form-control" required />
     </div>
     <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" id="email" name="Email" class="form-control" required />
+    </div>
+    <div class="mb-3">
         <label for="password" class="form-label">Wachtwoord</label>
         <input type="password" id="password" name="Password" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label">Adres</label>
+        <input type="text" id="address" name="Address" class="form-control" required />
     </div>
     <button type="submit" class="btn btn-primary">Inloggen</button>
 </form>

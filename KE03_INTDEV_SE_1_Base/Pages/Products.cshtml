@@ -23,12 +23,32 @@
 <div class="row">
     @foreach (var product in Model.Products)
     {
+        var discountedPrice = product.Price * (1 - product.DiscountPercentage / 100m);
         <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100 shadow-sm position-relative">
+                @if (product.DiscountPercentage > 0)
+                {
+                    <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white p-1 rounded-end">
+                        -@product.DiscountPercentage% SALE
+                    </div>
+                }
                 <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 250px; object-fit: cover;" />
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">@product.Description</p>
                     <div class="mt-auto">
+                        <div class="product-price mb-2">
+                            @if (product.DiscountPercentage > 0)
+                            {
+                                <span class="old-price text-muted text-decoration-line-through">€ @product.Price.ToString("0.00")</span>
+                                <span class="new-price fw-bold ms-2">€ @discountedPrice.ToString("0.00")</span>
+                            }
+                            else
+                            {
+                                <span>€ @product.Price.ToString("0.00")</span>
+                            }
+                        </div>
+
                         <form method="post" asp-page-handler="AddToCart">
                             <input type="hidden" name="productId" value="@product.Id" />
                             <button class="btn btn-success btn-sm me-2">Toevoegen aan winkelwagen</button>
@@ -41,24 +61,22 @@
     }
 </div>
 
-
-
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             @if (TempData["ProductName"] != null && TempData["ProductImage"] != null)
             {
-                <text>
-                    var toastEl = document.getElementById('productToast');
-                    var toastText = document.getElementById('toastText');
-                    var toastImage = document.getElementById('toastImage');
+                    <text>
+                        var toastEl = document.getElementById('productToast');
+                        var toastText = document.getElementById('toastText');
+                        var toastImage = document.getElementById('toastImage');
 
-                    toastText.textContent = "@TempData["ProductName"] is toegevoegd aan je winkelmand!";
-                    toastImage.src = "@TempData["ProductImage"]";
+                        toastText.textContent = "@TempData["ProductName"] is toegevoegd aan je winkelmand!";
+                        toastImage.src = "@TempData["ProductImage"]";
 
-                    var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
-                    toast.show();
-                </text>
+                        var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+                        toast.show();
+                    </text>
             }
         });
     </script>

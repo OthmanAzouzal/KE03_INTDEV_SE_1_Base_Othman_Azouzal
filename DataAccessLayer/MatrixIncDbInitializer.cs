@@ -1,21 +1,17 @@
-﻿using DataAccessLayer.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DataAccessLayer;
+using DataAccessLayer.Models;
 
-namespace DataAccessLayer
+public static class MatrixIncDbInitializer
 {
-    public static class MatrixIncDbInitializer
+    public static void Initialize(MatrixIncDbContext context)
     {
-        public static void Initialize(MatrixIncDbContext context)
+        // Look for any customers.
+        if (context.Customers.Any())
         {
-            // Look for any customers.
-            if (context.Customers.Any())
-            {
-                return;   // DB has been seeded
-            }
+            return;   // DB has been seeded
+        }
 
         // TODO: Hier moet ik nog wat namen verzinnen die betrekking hebben op de matrix.
         // - Denk aan de m3 boutjes, moertjes en ringetjes.
@@ -41,7 +37,7 @@ namespace DataAccessLayer
         };
         context.Orders.AddRange(orders);
 
-        context.SaveChanges(); // Dit is belangrijk voor het opslaan van klanten en orders
+        
 
         // Haal de producten op uit de database zodat we de juiste Id's kunnen gebruiken voor de reviews
         var products = context.Products.ToList();
