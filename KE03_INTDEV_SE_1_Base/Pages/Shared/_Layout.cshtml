@@ -55,13 +55,8 @@
                         }
                         @if (!string.IsNullOrEmpty(username))
                         {
-                            <li class="nav-item d-flex align-items-center text-light me-2">
-                                <span class="nav-link text-light">Welkom, @username</span>
-                            </li>
                             <li class="nav-item">
-                                <form method="post" asp-page="/Logout" class="d-inline">
-                                    <button type="submit" class="btn btn-outline-light btn-sm">Uitloggen</button>
-                                </form>
+                                <span class="nav-link text-light">Welkom, @username</span>
                             </li>
                         }
                         else
@@ -70,7 +65,6 @@
                                 <a class="nav-link text-light" asp-page="/Login">Inloggen</a>
                             </li>
                         }
-
                     </ul>
                 </div>
             </div>

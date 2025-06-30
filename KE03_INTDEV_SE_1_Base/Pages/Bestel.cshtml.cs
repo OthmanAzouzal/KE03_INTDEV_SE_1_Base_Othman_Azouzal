@@ -41,6 +41,7 @@ namespace KE03_INTDEV_SE_1_Base.Pages
                 return Page();
             }
 
+            // Zoek bestaande klant of maak nieuwe aan
             var customer = _customerRepository.GetCustomerByEmail(Email);
             if (customer == null)
             {
@@ -51,46 +52,36 @@ namespace KE03_INTDEV_SE_1_Base.Pages
                     Email = Email
                 };
                 _context.Customers.Add(customer);
-                _context.SaveChanges();
+                _context.SaveChanges(); // nodig om Customer.Id te krijgen
             }
 
+            // Maak order en orderitems aan
             var order = new Order
             {
                 OrderDate = DateTime.Now,
                 CustomerId = customer.Id,
-                OrderItems = new List<OrderItem>()
-            };
-
-            foreach (var item in cartItems)
-            {
-                var orderItem = new OrderItem
+                OrderItems = cartItems.Select(item => new OrderItem
                 {
+                    ProductId = item.ProductId,
                     Quantity = item.Quantity,
                     UnitPrice = item.Price
-                };
-
-                if (item.IsProduct) // Stel je hebt een property die dit aangeeft
-                {
-                    orderItem.ProductId = item.ProductId;
-                }
-                else // anders is het een part
-                {
-                    orderItem.PartId = item.PartId;
-                }
-
-                order.OrderItems.Add(orderItem);
-            }
+                }).ToList()
+            };
 
             _context.Orders.Add(order);
             _context.SaveChanges();
 
+            _context.Entry(customer).Reload();
+
+
+            // Leeg winkelmand
             _cartRepository.ClearCart();
 
+            // Opslaan van e-mail in sessie voor orderhistorie
             HttpContext.Session.SetString("Username", Email);
 
             TempData["OrderSuccess"] = "Bedankt voor je bestelling!";
             return RedirectToPage("/Orders");
         }
-
     }
 }
