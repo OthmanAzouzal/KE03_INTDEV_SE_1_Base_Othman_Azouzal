@@ -22,5 +22,10 @@ namespace DataAccessLayer.Models
         public ICollection<Order> Orders { get; } = new List<Order>();
 
         public ICollection<Part> Parts { get; } = new List<Part>();
+
+        public ICollection<Review> Reviews { get; set; }
+
+        public int DiscountPercentage { get; set; } = 0;
+
     }
 }

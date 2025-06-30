@@ -9,61 +9,71 @@ namespace KE03_INTDEV_SE_1_Base
     {
         public static void Main(string[] args)
         {
+            // Maak een builder aan voor de WebApplication
             var builder = WebApplication.CreateBuilder(args);
 
-            // Register services vóór Build
-            builder.Services.AddDbContext<MatrixIncDbContext>(
-                options => options.UseSqlite("Data Source=MatrixInc.db"));
+            // Registreer services vóór Build
+            builder.Services.AddDbContext<MatrixIncDbContext>(options =>
+                options.UseSqlite("Data Source=MatrixInc.db")); // Configureer de database met SQLite
 
+            // Voeg repositories toe aan dependency injection container
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IPartRepository, PartRepository>();
+            builder.Services.AddScoped<IDiscountRepository, DiscountRepository>(); // Kortingsrepository toegevoegd
+
+            // Voeg de HttpContextAccessor toe zodat je toegang hebt tot de sessie
             builder.Services.AddHttpContextAccessor();
+
+            // Configureer sessies en caching
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
-            builder.Services.AddScoped<CartRepository>();
 
+            // Voeg andere services toe zoals cart repository en cookiebeleid
+            builder.Services.AddScoped<CartRepository>();
             builder.Services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            // RazorPages toevoegen
+            // Voeg Razor Pages toe voor de viewlaag
             builder.Services.AddRazorPages();
 
+            // Bouw de applicatie
             var app = builder.Build();
 
-            // Middleware pipeline
+            // Configureer de middleware pipeline
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
+                app.UseExceptionHandler("/Error"); // Foutafhandelingspagina
+                app.UseHsts(); // HTTPS Strict Transport Security
             }
 
+            // Initieer de database bij het opstarten als deze nog niet bestaat
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
                 var context = services.GetRequiredService<MatrixIncDbContext>();
-                context.Database.EnsureCreated();
-                MatrixIncDbInitializer.Initialize(context);
+                context.Database.EnsureCreated(); // Zorg ervoor dat de database wordt aangemaakt als die nog niet bestaat
+                MatrixIncDbInitializer.Initialize(context); // Initialiseer de database met eventuele voorbeelddata
             }
 
-            app.UseSession();
+            // Configuraties voor sessies en routing
+            app.UseSession(); // Sessies gebruiken
+            app.UseHttpsRedirection(); // Verplichten om HTTPS te gebruiken
+            app.UseStaticFiles(); // Statische bestanden zoals CSS en afbeeldingen beschikbaar stellen
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseRouting(); // Routing middleware
 
-            app.UseRouting();
+            app.UseAuthorization(); // Autorisatie middleware (als je autorisatie hebt geconfigureerd)
 
-            app.UseAuthorization();
-
+            // Map Razor Pages (voor routing naar .cshtml pagina's)
             app.MapRazorPages();
 
+            // Start de applicatie
             app.Run();
         }
-
     }
 }

@@ -5,7 +5,7 @@
     ViewData["Title"] = "Onderdelen";
 }
 
-<h1 class="text-center mb-4">Onderdelen</h1>
+<h1>Onderdelen</h1>
 
 <!-- Toast notificatie met afbeelding -->
 <div aria-live="polite" aria-atomic="true" class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
@@ -20,25 +20,39 @@
     </div>
 </div>
 
-<!-- Begin van de onderdelen-weergave -->
-<div class="row g-4">
+<div class="row">
     @foreach (var part in Model.Parts)
     {
-        <div class="col-md-3 col-sm-6">
-            <div class="card part-card h-100 shadow-lg">
-                <div class="position-relative">
-                    <img src="@part.ImageUrl" class="card-img-top" alt="@part.Name" style="height: 240px; object-fit: cover;" />
-                    <span class="badge bg-success position-absolute top-0 start-0 m-2">Op voorraad</span>
-                </div>
+        var discountedPrice = part.Price * (1 - part.DiscountPercentage / 100m);
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm position-relative">
+                @if (part.DiscountPercentage > 0)
+                {
+                    <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white p-1 rounded-end">
+                        -@part.DiscountPercentage% SALE
+                    </div>
+                }
+                <img src="@part.ImageUrl" class="card-img-top" alt="@part.Name" style="height: 250px; object-fit: cover;" />
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">@part.Name</h5>
-                    <p class="card-text mb-3" style="font-size: 1rem; color: #555;">€@part.Price</p>
-                    <div class="d-flex justify-content-between mt-auto">
+                    <div class="mt-auto">
+                        <div class="product-price mb-2">
+                            @if (part.DiscountPercentage > 0)
+                            {
+                                <span class="old-price text-muted text-decoration-line-through">€ @part.Price.ToString("0.00")</span>
+                                <span class="new-price fw-bold ms-2">€ @discountedPrice.ToString("0.00")</span>
+                            }
+                            else
+                            {
+                                <span>€ @part.Price.ToString("0.00")</span>
+                            }
+                        </div>
+
                         <form method="post" asp-page-handler="AddToCart">
                             <input type="hidden" asp-for="SelectedPartId" value="@part.Id" />
-                            <button class="btn btn-primary btn-sm">Toevoegen</button>
+                            <button class="btn btn-success btn-sm me-2">Toevoegen aan winkelwagen</button>
                         </form>
-                        <a asp-page="/PartDetails" asp-route-id="@part.Id" class="btn btn-outline-secondary btn-sm">Bekijk</a>
+                        <a asp-page="/PartDetails" asp-route-id="@part.Id" class="btn btn-outline-primary btn-sm mt-2 w-100">Bekijk onderdeel</a>
                     </div>
                 </div>
             </div>
@@ -46,93 +60,22 @@
     }
 </div>
 
-@section Styles {
-    <style>
-        /* Algemeen voor de onderdeelkaart */
-        .part-card {
-            background-color: #fff;
-            border: none;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s ease-in-out;
-        }
-
-            .part-card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            }
-
-            .part-card img {
-                max-width: 100%;
-                height: auto;
-                object-fit: cover;
-            }
-
-            .part-card .card-title {
-                font-size: 1.1rem;
-                font-weight: bold;
-                color: #333;
-                margin: 10px 0;
-            }
-
-            .part-card .card-text {
-                font-size: 1.1rem;
-                color: #ff6f61;
-                font-weight: bold;
-            }
-
-            .part-card .card-body {
-                padding: 15px;
-            }
-
-        .badge {
-            font-size: 0.875rem;
-            font-weight: bold;
-        }
-
-        /* Toevoegen aan winkelwagen knop */
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            width: 100px;
-        }
-
-            .btn-primary:hover {
-                background-color: #0056b3;
-                border-color: #004085;
-            }
-
-        /* Bekijk onderdeel knop */
-        .btn-outline-secondary {
-            color: #6c757d;
-            border-color: #6c757d;
-            width: 100px;
-        }
-
-            .btn-outline-secondary:hover {
-                color: #495057;
-                background-color: #e9ecef;
-                border-color: #6c757d;
-            }
-    </style>
-}
-
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             @if (TempData["ProductName"] != null && TempData["ProductImage"] != null)
             {
-                    <text>
-                        var toastEl = document.getElementById('partToast');
-                        var toastText = document.getElementById('toastText');
-                        var toastImage = document.getElementById('toastImage');
+                        <text>
+                            var toastEl = document.getElementById('partToast');
+                            var toastText = document.getElementById('toastText');
+                            var toastImage = document.getElementById('toastImage');
 
-                        toastText.textContent = "@TempData["ProductName"] is toegevoegd aan je winkelmand!";
-                        toastImage.src = "@TempData["ProductImage"]";
+                            toastText.textContent = "@TempData["ProductName"] is toegevoegd aan je winkelmand!";
+                            toastImage.src = "@TempData["ProductImage"]";
 
-                        var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
-                        toast.show();
-                    </text>
+                            var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+                            toast.show();
+                        </text>
             }
         });
     </script>

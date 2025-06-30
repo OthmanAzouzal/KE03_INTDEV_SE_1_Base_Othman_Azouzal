@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using DataAccessLayer;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories;
@@ -19,6 +21,8 @@ namespace KE03_INTDEV_SE_1_Base.Pages
 
         public Product? Product { get; set; }
 
+        public List<Review> Reviews { get; set; } = new();
+
         public IActionResult OnGet(int id)
         {
             Product = _context.Products.Find(id);
@@ -26,6 +30,11 @@ namespace KE03_INTDEV_SE_1_Base.Pages
             {
                 return NotFound();
             }
+
+            // Reviews ophalen van dit product
+            Reviews = _context.Reviews
+                .Where(r => r.ProductId == id)
+                .ToList();
 
             return Page();
         }
@@ -43,7 +52,8 @@ namespace KE03_INTDEV_SE_1_Base.Pages
             TempData["ProductName"] = product.Name;
             TempData["ProductImage"] = product.ImageUrl;
 
-            return RedirectToPage("/Products");
+            // Blijf op productdetailspagina na toevoegen winkelwagen
+            return RedirectToPage(new { id = productId });
         }
     }
 }

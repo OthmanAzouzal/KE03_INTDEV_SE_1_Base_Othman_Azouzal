@@ -5,7 +5,7 @@
     ViewData["Title"] = "Alle Producten";
 }
 
-<h1 class="text-center mb-4">Alle Producten</h1>
+<h1>Alle Producten</h1>
 
 <!-- Toast notificatie met afbeelding -->
 <div aria-live="polite" aria-atomic="true" class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
@@ -20,102 +20,46 @@
     </div>
 </div>
 
-<!-- Begin van de product-weergave -->
-<div class="row g-4">
+<div class="row">
     @foreach (var product in Model.Products)
     {
-        <div class="col-md-3 col-sm-6">
-            <div class="card product-card h-100 shadow-lg">
-                <div class="position-relative">
-                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 240px; object-fit: cover;" />
-                    <span class="badge bg-success position-absolute top-0 start-0 m-2">Op voorraad</span>
-                </div>
+        var discountedPrice = product.Price * (1 - product.DiscountPercentage / 100m);
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm position-relative">
+                @if (product.DiscountPercentage > 0)
+                {
+                    <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white p-1 rounded-end">
+                        -@product.DiscountPercentage% SALE
+                    </div>
+                }
+                <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 250px; object-fit: cover;" />
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">@product.Name</h5>
-                    <p class="card-text mb-3" style="font-size: 1rem; color: #555;">€@product.Price</p>
-                    <div class="d-flex justify-content-between mt-auto">
+                    <p class="card-text">@product.Description</p>
+                    <div class="mt-auto">
+                        <div class="product-price mb-2">
+                            @if (product.DiscountPercentage > 0)
+                            {
+                                <span class="old-price text-muted text-decoration-line-through">€ @product.Price.ToString("0.00")</span>
+                                <span class="new-price fw-bold ms-2">€ @discountedPrice.ToString("0.00")</span>
+                            }
+                            else
+                            {
+                                <span>€ @product.Price.ToString("0.00")</span>
+                            }
+                        </div>
+
                         <form method="post" asp-page-handler="AddToCart">
                             <input type="hidden" name="productId" value="@product.Id" />
-                            <button class="btn btn-primary btn-sm">Toevoegen</button>
+                            <button class="btn btn-success btn-sm me-2">Toevoegen aan winkelwagen</button>
                         </form>
-                        <a asp-page="/ProductDetails" asp-route-id="@product.Id" class="btn btn-outline-secondary btn-sm">Bekijk</a>
+                        <a asp-page="/ProductDetails" asp-route-id="@product.Id" class="btn btn-outline-primary btn-sm mt-2 w-100">Bekijk product</a>
                     </div>
                 </div>
             </div>
         </div>
     }
 </div>
-
-@section Styles {
-    <style>
-        /* Algemeen voor de productkaart */
-        .product-card {
-            background-color: #fff;
-            border: none;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s ease-in-out;
-        }
-
-            .product-card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            }
-
-            .product-card img {
-                max-width: 100%;
-                height: auto;
-                object-fit: cover;
-            }
-
-            .product-card .card-title {
-                font-size: 1.1rem;
-                font-weight: bold;
-                color: #333;
-                margin: 10px 0;
-            }
-
-            .product-card .card-text {
-                font-size: 1.1rem;
-                color: #ff6f61;
-                font-weight: bold;
-            }
-
-            .product-card .card-body {
-                padding: 15px;
-            }
-
-        .badge {
-            font-size: 0.875rem;
-            font-weight: bold;
-        }
-
-        /* Toevoegen aan winkelwagen knop */
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            width: 100px;
-        }
-
-            .btn-primary:hover {
-                background-color: #0056b3;
-                border-color: #004085;
-            }
-
-        /* Bekijk product knop */
-        .btn-outline-secondary {
-            color: #6c757d;
-            border-color: #6c757d;
-            width: 100px;
-        }
-
-            .btn-outline-secondary:hover {
-                color: #495057;
-                background-color: #e9ecef;
-                border-color: #6c757d;
-            }
-    </style>
-}
 
 @section Scripts {
     <script>
